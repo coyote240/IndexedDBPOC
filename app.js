@@ -27,7 +27,7 @@ function initDb (event) {
   let objectStore = db.createObjectStore('dwarves', { keyPath: 'name' });
 
   objectStore.createIndex('name', 'name', { unique: true });
-  objectStore.createIndex('story', 'story', { unique: false });
+  objectStore.createIndex('story', 'story.id', { unique: false });
 }
 
 function getDwarves () {
@@ -79,27 +79,100 @@ function readAsText (blob) {
   });
 }
 
-function initForm () {
-  let form = document.getElementById('dwarf-filter');
-  let select = document.getElementById('story');
+function loadStories (db) {
+  return new Promise((resolve, reject) => {
+    let stories = {};
+
+    let objectStore = db.transaction('dwarves')
+      .objectStore('dwarves');
+
+    objectStore.openCursor().onsuccess = (event) => {
+      let cursor = event.target.result;
+      if(cursor) {
+        let story = cursor.value.story;
+        stories[story.id] = story;
+        cursor.continue();
+      } else {
+        resolve(stories);
+      }
+    };
+
+  });
 }
 
-function displayDwarves (dwarves) {
-  let target = document.getElementById('dwarves'),
-      hobbit = document.getElementById('the-hobbit'),
-      snowwhite = document.getElementById('snow-white');
+function getDwarvesByStory(storyid) {
+  return new Promise((resolve, reject) => {
+    openDb('DwarfDB').then(db => {
 
-  
+      let store = db.transaction('dwarves') .objectStore('dwarves');
+
+      let index = store.index('story');
+      let dwarves = [];
+
+      let request = index.openCursor(IDBKeyRange.only(storyid));
+
+      request.onsuccess = event => {
+        let cursor = event.target.result;
+        if (cursor) {
+          dwarves.push(cursor.value);
+          cursor.continue();
+        } else {
+          resolve(dwarves);
+        }
+      };
+
+      request.onError(event => {
+        reject(event);
+      });
+
+    });
+  });
+}
+
+function displayFilteredDwarves(dwarves) {
+  let output = document.getElementById('filtered-dwarves');
+  while(output.firstChild) {
+    output.removeChild(output.firstChild);
+  }
+
+  dwarves.forEach(dwarf => {
+    let item = document.createElement('li');
+    item.appendChild(document.createTextNode(dwarf.name));
+
+    output.appendChild(item);
+  });
+}
+
+function initForm (stories) {
+  let form = document.getElementById('dwarf-filter');
+  let select = document.getElementById('story');
+  select.onchange = (event) => {
+    getDwarvesByStory(event.target.value).then(result => {
+      displayFilteredDwarves(result);
+    });
+  };
+
+  Object.values(stories).forEach(story => {
+    let option = document.createElement('option');
+    option.setAttribute('value', story.id);
+    option.appendChild(document.createTextNode(story.title));
+
+    select.appendChild(option);
+  });
 }
 
 openDb('DwarfDB').then(db => {
 
-  return getDwarves().then(dwarves => {
+  getDwarves().then(dwarves => {
     return storeDwarves(db, dwarves);
   });
 
-}).then(dwarves => {
-  console.log(dwarves);
+  return db
+
+}).then(db => {
+  return loadStories(db);
+}).then(stories => {
+  initForm(stories);
 }).catch(error => {
   console.log(error);
 });

@@ -1,91 +1,151 @@
 [
   {
     "name": "Grumpy",
-    "story": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    "story": {
+      "id": "snowwhite",
+      "title": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    }
   },
   {
     "name": "Happy",
-    "story": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    "story": {
+      "id": "snowwhite",
+      "title": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    }
   },
   {
     "name": "Sleepy",
-    "story": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    "story": {
+      "id": "snowwhite",
+      "title": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    }
   },
   {
     "name": "Bashful",
-    "story": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    "story": {
+      "id": "snowwhite",
+      "title": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    }
   },
   {
     "name": "Sneezy",
-    "story": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    "story": {
+      "id": "snowwhite",
+      "title": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    }
   },
   {
     "name": "Dopey",
-    "story": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    "story": {
+      "id": "snowwhite",
+      "title": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    }
   },
   {
     "name": "Doc",
-    "story": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    "story": {
+      "id": "snowwhite",
+      "title": "Snow White and the Seven Dwarves (1937 Disney Adaptation)"
+    }
   },
   {
     "name": "Thorin Oakenshield",
-    "story": "The Hobbit"
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    }
   },
   {
     "name": "Fili",
-    "story": "The Hobbit",
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    },
     "brothers": ["Kili"]
   },
   {
     "name": "Kili",
-    "story": "The Hobbit",
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    },
     "brothers": ["Fili"]
   },
   {
     "name": "Balin",
-    "story": "The Hobbit",
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    },
     "brothers": ["Dwalin", "Oin", "Gloin"]
   },
   {
     "name": "Dwalin",
-    "story": "The Hobbit",
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    },
     "brothers": ["Balin", "Oin", "Gloin"]
   },
   {
     "name": "Oin",
-    "story": "The Hobbit",
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    },
     "brothers": ["Balin", "Dwalin", "Gloin"]
   },
   {
     "name": "Gloin",
-    "story": "The Hobbit",
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    },
     "brothers": ["Balin", "Dwalin", "Oin"]
   },
   {
     "name": "Dori",
-    "story": "The Hobbit",
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    },
     "brothers": ["Nori", "Ori"]
   },
   {
     "name": "Nori",
-    "story": "The Hobbit",
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    },
     "brothers": ["Dori", "Ori"]
   },
   {
     "name": "Ori",
-    "story": "The Hobbit",
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    },
     "brothers": ["Dori", "Nori"]
   },
   {
     "name": "Bifur",
-    "story": "The Hobbit"
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    }
   },
   {
     "name": "Bofur",
-    "story": "The Hobbit"
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    }
   },
   {
     "name": "Bombur",
-    "story": "The Hobbit"
+    "story": {
+      "id": "thehobbit",
+      "title": "The Hobbit"
+    }
   }
 ]
