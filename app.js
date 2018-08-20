@@ -2,6 +2,18 @@ if(!indexedDB) {
   alert('Your browser does not support IndexedDB');
 }
 
+if(!navigator.serviceWorker.controller) {
+
+  navigator.serviceWorker.register('/worker.js', { scope: '/' }).then( reg => {
+
+    navigator.serviceWorker.controller.postMessage('foo');
+
+  }).catch(err => {
+    console.log('Registration failed: ', err);
+  });
+
+}
+
 function openDb (dbName) {
   return new Promise((resolve, reject) => {
     let request = indexedDB.open(dbName);
@@ -15,8 +27,8 @@ function openDb (dbName) {
     };
 
     request.onupgradeneeded = event => {
-      freshDB = true;
-      initDb(event);
+      let db = initDb(event);
+      resolve(db);
     };
   });
 }
@@ -28,6 +40,8 @@ function initDb (event) {
 
   objectStore.createIndex('name', 'name', { unique: true });
   objectStore.createIndex('story', 'story.id', { unique: false });
+
+  return db;
 }
 
 function getDwarves () {
@@ -104,26 +118,17 @@ function getDwarvesByStory(storyid) {
   return new Promise((resolve, reject) => {
     openDb('DwarfDB').then(db => {
 
-      let store = db.transaction('dwarves') .objectStore('dwarves');
-
+      let store = db.transaction('dwarves').objectStore('dwarves');
       let index = store.index('story');
-      let dwarves = [];
-
-      let request = index.openCursor(IDBKeyRange.only(storyid));
+      let request = index.getAll(IDBKeyRange.only(storyid));
 
       request.onsuccess = event => {
-        let cursor = event.target.result;
-        if (cursor) {
-          dwarves.push(cursor.value);
-          cursor.continue();
-        } else {
-          resolve(dwarves);
-        }
+        resolve(event.target.result);
       };
 
-      request.onError(event => {
+      request.onerror = event => {
         reject(event);
-      });
+      };
 
     });
   });
@@ -146,6 +151,7 @@ function displayFilteredDwarves(dwarves) {
 function initForm (stories) {
   let form = document.getElementById('dwarf-filter');
   let select = document.getElementById('story');
+
   select.onchange = (event) => {
     getDwarvesByStory(event.target.value).then(result => {
       displayFilteredDwarves(result);
